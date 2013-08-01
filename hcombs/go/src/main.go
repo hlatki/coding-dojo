@@ -13,10 +13,6 @@ import(
   "strings"
 )
 
-func printWinner( g *Hand) {
-	fmt.Printf("%s wins. - with %s\n", g.player, g.rank.name() )
-}
-
 
 func main() {
 	games := strings.Split( os.Args[1], "  ")
@@ -27,7 +23,7 @@ func main() {
 	if (nil == winner) {
 		fmt.Println("Tie.")
 	} else {
-		printWinner( winner )
+		fmt.Println(printWinner( winner ))
 	}
 }
 

@@ -14,6 +14,38 @@ import (
 	"sort"
 )
 
+type suit uint
+const (
+	SPADE suit =   1 << (iota + 12)
+	HEART suit =   1 << (iota + 12)
+	DIAMOND suit = 1 << (iota + 12)
+	CLUB suit =    1 << (iota + 12)
+	UNKNOWN_SUIT
+)
+
+func suitFromString(s string) suit {
+	r,_ := utf8.DecodeLastRuneInString(s)
+
+	switch r {
+		case 'S': return SPADE
+		case 'H': return HEART
+		case 'C': return CLUB
+		case 'D': return DIAMOND
+	}
+	return UNKNOWN_SUIT
+}
+
+func (s suit) String() string {
+	switch s {
+		case SPADE: return "S"
+		case HEART: return "H"
+		case CLUB: return "C"
+		case DIAMOND: return "D"
+	}
+	return "?"
+}
+
+
 type cardRank int8
 const (
 	TWO cardRank = iota
@@ -32,33 +64,40 @@ const (
 	ERROR
 )
 
+// Prime #'s that let you "score" a hand without sorting it
+var cardPrimes = [...]int {
+	2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41,
+}
+
+var cardRankString = [...]string {
+  "2","3","4","5","6","7","8","9","T","J","Q","K","A",
+}
+
+func (c cardRank) String() string {
+	return cardRankString[c]
+}
+
 type HandRank int8
 const (
-	HIGH_CARD HandRank = iota
-	PAIR
-	TWO_PAIR
-	THREE_OF_A_KIND
-	STRAIGHT
-	FLUSH
-	FULL_HOUSE
-	FOUR_OF_A_KIND
+	_ HandRank= iota
 	STRAIGHT_FLUSH
+	FOUR_OF_A_KIND
+	FULL_HOUSE
+	FLUSH
+	STRAIGHT
+	THREE_OF_A_KIND
+	TWO_PAIR
+	ONE_PAIR
+	HIGH_CARD
 )
 
-func (h *HandRank) name() string{
-	var name string
-	switch (*h) {
-		case HIGH_CARD: name = "high card: "
-		case PAIR: name = "pair: "
-		case TWO_PAIR: name = "two pair"
-		case THREE_OF_A_KIND: name = "three of a kind"
-		case STRAIGHT: name = "straight"
-		case FLUSH: name = "flush"
-		case FULL_HOUSE: name = "full house"
-		case FOUR_OF_A_KIND: name = "four of a kind"
-		case STRAIGHT_FLUSH: name = "straight flush"
-	}
-	return name
+var handRankString = [...]string { "",
+  "Stright Flush", "Four of a Kind", "Full House", "Flush", "Straight",
+  "Three of a Kind", "Two Pair", " One Pair", "High Card",
+}
+
+func (h HandRank) String() string {
+	return handRankString[h]
 }
 
 func GetCardRank( s string ) cardRank {
@@ -80,18 +119,16 @@ func GetCardSuit( s string ) rune  {
 }
 
 type Card struct {
-	text string
 	rank cardRank
 	suit rune
 }
 
-func (c *Card) String() string {
-	return c.text
+func (c Card) String() string {
+	return fmt.Sprintf("%v%v", c.rank, c.suit)
 }
 
 func NewCard(s string) Card {
 	var card Card
-	card.text = s
 	card.rank = GetCardRank(s)
 	card.suit = GetCardSuit(s)
 	return card
@@ -106,13 +143,13 @@ func (c Cards) Swap(i,j int) {
 	c[j],c[i] = c[i], c[j]
 }
 
-func (c *Cards) String() string {
+func (c Cards) String() string {
 	return fmt.Sprintf("%s %s %s %s %s",
-		(*c)[0].text,
-		(*c)[1].text,
-		(*c)[2].text,
-		(*c)[3].text,
-		(*c)[4].text)
+		c[0],
+		c[1],
+		c[2],
+		c[3],
+		c[4])
 }
 
 func NewCards(s string) Cards {
@@ -129,6 +166,8 @@ type Hand struct {
 	cards Cards
 	rank HandRank
 	victoryLap string
+	hist *histogram
+	equalityComparison func(l,r *Hand) *Hand
 }
 
 func NewHand( s string ) Hand {
@@ -136,22 +175,27 @@ func NewHand( s string ) Hand {
 	var game Hand
 	game.player = g[0]
 	game.cards = NewCards(g[1])
-	game.rank = Rank(&game.cards)
+	Rank(&game)
 	return game
 }
 
-func compareEqualHands ( l, r *Hand) *Hand {
-	return nil
+func printWinner( g *Hand ) string {
+	return fmt.Sprintf("%s wins. - with %s\n", g.player, g.rank )
 }
 
+
 func (g *Hand) whoWon( otherGame *Hand ) *Hand {
+
+	var winner *Hand
+
 	if (g.rank == otherGame.rank) {
-		return compareEqualHands( g, otherGame )
+		return rankEquivalentHands(g, otherGame)
+	} else {
+		winner = otherGame
+		if g.rank < otherGame.rank {
+			winner = g
+		}
 	}
 
-	if g.rank > otherGame.rank {
-		return g
-	} else {
-		return otherGame
-	}
+	return winner
 }
