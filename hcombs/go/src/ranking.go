@@ -73,6 +73,10 @@ func (h histogram) getPairs() Cards {
 	return h.filterByLength( func(i int) bool { return i == 2 } )
 }
 
+/**
+* Rank equivalent hands based upon appropriate
+* algorithms
+ */
 func rankEquivalentHands( h1, h2 *Hand ) *Hand {
 	switch h1.rank {
 		case STRAIGHT_FLUSH, STRAIGHT, HIGH_CARD, FLUSH: return rankHighCard(h1,h2)
@@ -109,7 +113,15 @@ func rankFullHouse(h1, h2 *Hand ) *Hand {
 	return winner
 }
 
+/**
+* Return the winning hand based upon a
+* High Card algorithm.
+*/
 func rankHighCard(h1,h2 *Hand ) *Hand {
+
+	//getSingleCards returns a reverse sorted array of Card
+	//structs for each card in the histogram that occurs once.
+
 	c1 := h1.hist.getSingleCards()
 	c2 := h2.hist.getSingleCards()
 
