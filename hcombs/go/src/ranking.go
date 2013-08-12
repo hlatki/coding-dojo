@@ -9,7 +9,7 @@ package main
 
 import (
 	"sort"
-	//"fmt"
+	"fmt"
 )
 
 //Define a histogram for checking card frequency
@@ -21,8 +21,31 @@ func HistogramFrom( c *Cards ) *histogram {
 	for _,card := range *c {
 		hist[card.rank] = append( hist[card.rank], card )
 	}
+
 	return &hist
 }
+
+func (h histogram) String() string {
+	s := "{ "
+
+	for k,v := range h {
+		s += fmt.Sprintf("[%s: %s],", k, v)
+	}
+	s += "}"
+	return s
+}
+
+func (c Cards) String() string {
+	s := "("
+
+	for _,v := range c  {
+		s += fmt.Sprintf("%s,", v )
+	}
+	s += ")"
+	return s
+}
+
+
 
 func (h histogram) distribution() [5]int {
 	distribution := []int{}
@@ -43,12 +66,13 @@ func (h histogram) distribution() [5]int {
 	return d
 }
 
-func (h histogram) getCardsByFrequency(freq int) []*Cards {
-	c := []*Cards{}
+func (h histogram) getCardsByFrequency(freq int) []Cards {
+
+	c := []Cards{}
 
 	for _,v := range h {
 		if (len(v) == freq) {
-			c = append(c, &v)
+			c = append(c, v)
 		}
 	}
 	return c
@@ -166,11 +190,12 @@ func rankTwoPair(h1,h2 *Hand) *Hand {
 
 func rankByFrequency(h1, h2 *Hand, freq int) *Hand {
 	cards1 := h1.hist.getCardsByFrequency(freq)
+
 	cards2 := h2.hist.getCardsByFrequency(freq)
 
 	switch {
-		case (*cards1[0])[0].rank > (*cards2[0])[0].rank: return h1
-		case (*cards1[0])[0].rank < (*cards2[0])[0].rank: return h2
+		case cards1[0][0].rank > cards2[0][0].rank: return h1
+		case cards1[0][0].rank < cards2[0][0].rank: return h2
 	}
 
 	return nil
@@ -216,8 +241,21 @@ func isFlush( g *Cards ) bool {
 	return true
 }
 
-func isStraight( g *Cards ) bool {
-	return ((*g)[4].rank - (*g)[0].rank) == 4
+func isStraight( g_ *Cards ) bool {
+
+	g := *g_
+
+	//So to check for the wheel,
+	// check to see if the top card is an ace
+	// and the 2nd to top card is a 5.
+	// If so, then it is the wheel.
+	if ( g[4].rank == ACE && g[3].rank == FIVE) {
+		return true
+	} else if (g[4].rank - g[0].rank == 4) {
+		return true
+	}
+
+	return false
 }
 
 

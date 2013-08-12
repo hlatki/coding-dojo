@@ -124,7 +124,7 @@ type Card struct {
 }
 
 func (c Card) String() string {
-	return fmt.Sprintf("%v%v", c.rank, c.suit)
+	return fmt.Sprintf("%v%s", c.rank, string(c.suit) )
 }
 
 func NewCard(s string) Card {
@@ -143,7 +143,7 @@ func (c Cards) Swap(i,j int) {
 	c[j],c[i] = c[i], c[j]
 }
 
-func (c Cards) String() string {
+/*func (c Cards) String() string {
 	return fmt.Sprintf("%s %s %s %s %s",
 		c[0],
 		c[1],
@@ -151,6 +151,7 @@ func (c Cards) String() string {
 		c[3],
 		c[4])
 }
+*/
 
 func NewCards(s string) Cards {
 	c := make(Cards, 5)
