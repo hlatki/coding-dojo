@@ -1,0 +1,16 @@
+I hadn't used C++'s STL much lately, so that is what I
+chose.
+
+I decided to play some miniture "golf" in the
+hand evaluator (poker.c).  This means I may have used
+some bad practices to squeeze some lines out of the
+code.  But I did not squeeze as hard as I could.  It
+encodes the hand into a string that can be directly
+compared to another hand's evaluation string.  The
+single comparison even takes into account the high
+card when there is a tie.  This string can actually
+be encoded into a single int (it only requires 26
+bits as is).
+
+main.c was just hacked up to get it running.
+
