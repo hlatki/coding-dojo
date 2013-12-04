@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Game of Life</title>
+    <link rel="stylesheet" href="./include/style.css">
+</head>
+<body>
+<header>
+</header>
+<canvas id="canvas" width="1200" height="800"></canvas>
+<aside>Game of Life with animations</aside>
+
+<script src="./include/utils.js"></script>
+<script src="./include/cell.js"></script>
+<script src="./include/game.js"></script>
+<script>
+
+    function randomizeVelocity(cell) {
+        cell.vx = Math.random() * 30 - 15;
+        cell.vy = Math.random() * 30 - 15;
+    }
+
+    function randomizeColor(cell) {
+        var die = Math.random() * 13;
+        if(die < 6) {
+            cell.color = utils.parseColor("#00ff00");
+        }
+        else if(die < 10) {
+            cell.color = utils.parseColor("#ffff00");
+        }
+        else {
+            cell.color = utils.parseColor("#ff0000");
+        }
+    }
+
+    function checkBoundaries(canvas, cell) {
+        var right = canvas.width;
+        var left = 0
+        var top = 0;
+        var bottom = canvas.height;
+
+        if(cell.x + cell.radius > right) {
+            cell.vx *= -1;
+        }
+        else if(cell.x - cell.radius < left) {
+            cell.vx *= -1;
+        }
+        if(cell.y + cell.radius > bottom) {
+            cell.vy *= -1;
+        }
+        else if(cell.y - cell.radius < top) {
+            cell.vy *= -1;
+        }
+    }
+
+    function applyFriction(cell, friction) {
+        var speed = Math.sqrt(cell.vx * cell.vx + cell.vy * cell.vy);
+        var angle = Math.atan2(cell.vy, cell.vx);
+
+        if(speed > friction) {
+            speed -= friction;
+        }
+        else {
+            speed = 0;
+        }
+
+        cell.vx = Math.cos(angle) * speed;
+        cell.vy = Math.sin(angle) * speed;
+    }
+
+    function move(cell) {
+        cell.x += cell.vx;
+        cell.y += cell.vy;
+    }
+
+    function draw(cell, context) {
+        cell.draw(context);
+    }
+
+    window.onload = function () {
+
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        var offset = 25;
+        var cellDef = "............................................\n" +
+                "..........................*.................\n" +
+                "........................*.*.................\n" +
+                "..............**......**............**......\n" +
+                ".............*...*....**............**......\n" +
+                "..**........*.....*...**....................\n" +
+                "..**........*...*.**....*.*.................\n" +
+                "............*.....*.......*.................\n" +
+                ".............*...*..........................\n" +
+                "..............**............................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n" +
+                "............................................\n";
+        var game = new Game(cellDef);
+        var rows = game.rows;
+        var cells = [];
+
+        for(var row = 0; row < rows.length; ++row) {
+            cells[row] = [];
+            for(var column = 0; column < rows[row].length; ++column) {
+                var cell = new Cell(game.isCellAliveAt(row, column));
+                cell.x = offset + column * offset;
+                cell.y = offset + row * offset;
+                cells[row][column] = cell;
+            }
+        }
+
+        for(var row = 0; row < cells.length; ++row) {
+            for(var col = 0; col < cells[row].length; ++col) {
+                var cell = cells[row][col];
+                randomizeVelocity(cell);
+                //randomizeColor(cell);
+            }
+        }
+
+        var friction = 0.1;
+        var frameCount = 0;
+
+        (function drawFrame () {
+            window.requestAnimationFrame(drawFrame, canvas);
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            for(var row = 0; row < cells.length; ++row) {
+                for(var col = 0; col < cells[row].length; ++col) {
+                    var cell = cells[row][col];
+//                    checkBoundaries(canvas, cell);
+//                    applyFriction(cell, friction);
+//                    move(cell);
+                    draw(cell, context);
+                }
+            }
+
+            frameCount++;
+
+//            if(frameCount % 20 != 0) {
+//                return;
+//            }
+
+            game.runNextGeneration();
+            rows = game.rows;
+
+            for(var row = 0; row < rows.length; ++row) {
+                for(var column = 0; column < rows[row].length; ++column) {
+                    var alive = game.isCellAliveAt(row, column);
+                    var cell = cells[row][column];
+                    cell.setAlive(alive);
+
+                }
+            }
+
+        }());
+    };
+</script>
+</body>
+</html>
