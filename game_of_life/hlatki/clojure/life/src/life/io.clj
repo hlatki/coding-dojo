@@ -6,11 +6,10 @@
 
 ;; ## Functions Convert file to vector of living cells
 
-(defn list-of-lines-in-file
-  "Return list where each element is a line from the file"
-  [filename]
-  (clojure.string/split (slurp filename) #"\n"))
+
+
 (defn live-cells-in-row
+  "Return list of live cells in a row"
   [row row-num]
   (loop [cells (seq row)
          i 0
@@ -24,24 +23,27 @@
                live-cells)))))
 
 (defn slurp-life-file
-  "Call this function to slurp a file and get back a list of live cells.
-  Get a list of live cells in a file that contains a grid like:
-  *...****
-  .*......
-  .*....**
-  .*....*.
-  "
+  "Take file where first line contains number of rows and cols
+  and the rest is the game state.
+  Return map like
+  {:rows 4
+   :cols 8
+   :live-cells list-of-live-cells"
   [filename]
-  (loop [cells (list-of-lines-in-file filename)
-         i 0
-         live-cells []]
-    (if (empty? cells)
-      live-cells
-      (recur (rest cells)
-             (inc i)
-             (concat live-cells (live-cells-in-row (first cells) i))))))
-
-
+  (let
+    [list-of-lines (clojure.string/split (slurp filename) #"\n")
+     num-rows-and-cols (clojure.string/split (first list-of-lines) #" ")
+     game-str (rest list-of-lines)]
+      (loop [rows game-str
+             i 0
+             live-cells []]
+        (if (empty? rows)
+          {:rows (Integer. (first num-rows-and-cols))
+           :cols (Integer. (second num-rows-and-cols))
+           :live-cells live-cells}
+          (recur (rest rows)
+                 (inc i)
+                 (concat live-cells (live-cells-in-row (first rows) i)))))))
 
 
 ;; ## Functions to output game state
@@ -85,8 +87,9 @@
      (all-cells-in-order rows cols)))
 
 
-(game-to-str (slurp-life-file "/Users/hannahatkinson/dev/coding-dojo/game_of_life/hlatki/clojure/life/src/life/1.in") 4 8)
+;;(game-to-str (slurp-life-file "/Users/hannahatkinson/dev/coding-dojo/game_of_life/hlatki/clojure/life/src/life/1.in"))
 
 
+;;(def game-state (slurp-life-file "/Users/hannahatkinson/dev/coding-dojo/game_of_life/hlatki/clojure/life/src/life/1.in"))
 
-
+;;(game-to-str (:live-cells game-state) (:rows game-state) (:cols game-state))
