@@ -14,3 +14,9 @@ waiting forever for the JVM to start up):
 ```
 lein run <file-with-initial-state> <number-of-generations>
 ```
+
+Or you can run the tests:
+
+```
+lein test
+```
