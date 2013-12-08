@@ -86,7 +86,7 @@
      ""
      (all-cells-in-order rows cols)))
 
-
+;;test stuff:
 ;;(game-to-str (slurp-life-file "/Users/hannahatkinson/dev/coding-dojo/game_of_life/hlatki/clojure/life/src/life/1.in"))
 
 
