@@ -49,16 +49,13 @@ public:
     GRID_SIZE_Y = y_width;
     _board = new CELL_TYPE[x_width*y_width];
 
-    printf("Inside GameBoard...\n");
     for (int x = 0; x < GRID_SIZE_X; x++)
       for (int y = 0; y < GRID_SIZE_Y; y++)
         node(x, y) = glider[x][y] == '.' ? CELL_DEAD : CELL_ALIVE;
-    printf("GameBoard is initialized.\n");
   }
 
   void next_generation(GameBoard *parent)
   {
-    printf("Inside next_generation...\n");
     for (int x = 0; x < GRID_SIZE_X; x++)
     {
       for (int y = 0; y < GRID_SIZE_Y; y++)
@@ -66,7 +63,6 @@ public:
         node(x, y) = calculate_cell(parent, x, y);
       }
     }
-    printf("Done with next_generation.\n");
   }
 
 
@@ -74,7 +70,6 @@ public:
   {
     printf("\033[H\033[J");
     //clear_screen();
-    printf("Inside draw_board...\n");
 
     for (int x = 0; x < GRID_SIZE_X; x++)
     {
@@ -134,32 +129,20 @@ private:
     return parent->node(x, y);
   }
 
-
-private:
-
-  void initialize_board(const char *starting_grid[])
-  {
-  }
-
-  int initialize_cell(void)
-  {
-    return rand() % 2;
-  }
-
 };
 
 
 int main(void)
 {
-  GameBoard board1(11, 38, glider), board2(11, 38, glider);
+  GameBoard board1(13, 38, glider), board2(13, 38, glider);
 
-  for (int a = 0; a < 100; a++)
+  for (int a = 0; a < 1000; a++)
   {
     board1.draw_board();
     board2.next_generation(&board1);
-    usleep(100000);
+    usleep(50000);
     board2.draw_board();
     board1.next_generation(&board2);
-    usleep(100000);
+    usleep(50000);
   }
 }
