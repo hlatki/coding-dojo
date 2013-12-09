@@ -22,17 +22,9 @@ void clear_screen(void)
 
 class GameBoard
 {
-private:
-
-  static const int GRID_SIZE_X = 11;
-  static const int GRID_SIZE_Y = 38;
-
-  char _board[GRID_SIZE_X][GRID_SIZE_Y];
-
-
 public:
 
-  enum CELL_TYPES
+  enum CELL_TYPE
   {
     CELL_DEAD = 0,
     CELL_ALIVE,
@@ -40,22 +32,41 @@ public:
   };
 
 
-  GameBoard(void)
+private:
+
+  int GRID_SIZE_X;
+  int GRID_SIZE_Y;
+
+  CELL_TYPE *_board;
+
+
+public:
+
+
+  GameBoard(int x_width, int y_width, const char *pattern[])
   {
+    GRID_SIZE_X = x_width;
+    GRID_SIZE_Y = y_width;
+    _board = new CELL_TYPE[x_width*y_width];
+
+    printf("Inside GameBoard...\n");
     for (int x = 0; x < GRID_SIZE_X; x++)
       for (int y = 0; y < GRID_SIZE_Y; y++)
-        _board[x][y] = glider[x][y] == '.' ? CELL_DEAD : CELL_ALIVE;
+        node(x, y) = glider[x][y] == '.' ? CELL_DEAD : CELL_ALIVE;
+    printf("GameBoard is initialized.\n");
   }
 
   void next_generation(GameBoard *parent)
   {
+    printf("Inside next_generation...\n");
     for (int x = 0; x < GRID_SIZE_X; x++)
     {
       for (int y = 0; y < GRID_SIZE_Y; y++)
       {
-        _board[x][y] = calculate_cell(parent, x, y);
+        node(x, y) = calculate_cell(parent, x, y);
       }
     }
+    printf("Done with next_generation.\n");
   }
 
 
@@ -63,12 +74,13 @@ public:
   {
     printf("\033[H\033[J");
     //clear_screen();
+    printf("Inside draw_board...\n");
 
     for (int x = 0; x < GRID_SIZE_X; x++)
     {
       for (int y = 0; y < GRID_SIZE_Y; y++)
       {
-        printf("%c", _board[x][y] ? '*' : '.');
+        printf("%c", node(x, y) ? '*' : '.');
       }
       printf("\n");
     }
@@ -76,7 +88,18 @@ public:
 
 private:
 
-  int calculate_cell(GameBoard *parent, int x, int y)
+  CELL_TYPE &node(int x, int y)
+  {
+    if (x < 0 || x >= GRID_SIZE_X || y < 0 || y >= GRID_SIZE_Y)
+    {
+      printf("Index out of range.\n");
+      exit(1);
+    }
+
+    return _board[GRID_SIZE_X * y + x];
+  }
+
+  CELL_TYPE calculate_cell(GameBoard *parent, int x, int y)
   {
     int living_cell_count;
 
@@ -91,7 +114,7 @@ private:
 
     if (living_cell_count < 2 || living_cell_count > 3)
       return CELL_DEAD;
-    else if (parent->_board[x][y] == CELL_ALIVE)
+    else if (parent->node(x, y) == CELL_ALIVE)
       return CELL_ALIVE;
     else if (living_cell_count == 3)
       return CELL_ALIVE;
@@ -108,7 +131,7 @@ private:
     if (x < 0 || x >= GRID_SIZE_X || y < 0 || y >= GRID_SIZE_Y)
       return 0;
 
-    return parent->_board[x][y];
+    return parent->node(x, y);
   }
 
 
@@ -128,7 +151,7 @@ private:
 
 int main(void)
 {
-  GameBoard board1, board2;
+  GameBoard board1(11, 38, glider), board2(11, 38, glider);
 
   for (int a = 0; a < 100; a++)
   {
