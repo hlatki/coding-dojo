@@ -53,7 +53,7 @@ public:
     {
       for (int y = 0; y < GRID_SIZE_Y; y++)
       {
-        calculate_cell(parent, x, y);
+        _board[x][y] = calculate_cell(parent, x, y);
       }
     }
   }
@@ -76,7 +76,7 @@ public:
 
 private:
 
-  void calculate_cell(GameBoard *parent, int x, int y)
+  int calculate_cell(GameBoard *parent, int x, int y)
   {
     int living_cell_count;
 
@@ -90,13 +90,16 @@ private:
     living_cell_count += is_alive(parent, x+1, y+1);
 
     if (living_cell_count < 2 || living_cell_count > 3)
-      _board[x][y] = CELL_DEAD;
+      return CELL_DEAD;
     else if (parent->_board[x][y] == CELL_ALIVE)
-      _board[x][y] = CELL_ALIVE;
+      return CELL_ALIVE;
     else if (living_cell_count == 3)
-      _board[x][y] = CELL_ALIVE;
-    else if (living_cell_count == 2)
-      _board[x][y] = CELL_DEAD;
+      return CELL_ALIVE;
+    else
+      return CELL_DEAD;
+
+    printf("We shouldn't be here.\n");
+    exit(0);
   }
 
 
