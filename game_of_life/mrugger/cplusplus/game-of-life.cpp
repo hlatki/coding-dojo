@@ -5,21 +5,6 @@
 #include "glider-gun.h"
 
 
-#if 0
-void clear_screen(void)
-{
-  if (!cur_term)
-  {
-    int result;
-    setupterm( NULL, STDOUT_FILENO, &result );
-    if (result <= 0) return;
-    }
-
-  putp( tigetstr( "clear" ) );
-}
-#endif
-
-
 class GameBoard
 {
 public:
@@ -54,6 +39,7 @@ public:
         node(x, y) = glider[x][y] == '.' ? CELL_DEAD : CELL_ALIVE;
   }
 
+
   void next_generation(GameBoard *parent)
   {
     for (int x = 0; x < GRID_SIZE_X; x++)
@@ -75,11 +61,12 @@ public:
     {
       for (int y = 0; y < GRID_SIZE_Y; y++)
       {
-        printf("%c", node(x, y) ? '*' : '.');
+        printf("%c", node(x, y) ? '*' : ' ');
       }
       printf("\n");
     }
   }
+
 
 private:
 
@@ -93,6 +80,7 @@ private:
 
     return _board[GRID_SIZE_X * y + x];
   }
+
 
   CELL_TYPE calculate_cell(GameBoard *parent, int x, int y)
   {
@@ -115,9 +103,6 @@ private:
       return CELL_ALIVE;
     else
       return CELL_DEAD;
-
-    printf("We shouldn't be here.\n");
-    exit(0);
   }
 
 
@@ -134,7 +119,7 @@ private:
 
 int main(void)
 {
-  GameBoard board1(13, 38, glider), board2(13, 38, glider);
+  GameBoard board1(GLIDER_Y, GLIDER_X, glider), board2(GLIDER_Y, GLIDER_X, glider);
 
   for (int a = 0; a < 1000; a++)
   {
