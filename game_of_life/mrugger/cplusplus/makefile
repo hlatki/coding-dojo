@@ -2,7 +2,13 @@
 CC=g++
 CFLAGS=-c
 
-SOURCES=game-of-life.cpp
+SOURCES=	game-of-life.cpp				\
+					gameboard.cpp						\
+					consolewriter.cpp				\
+					queryabletowriter.cpp		\
+					pattern.baseclass.cpp		\
+					pattern.glider-gun.cpp
+
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=game-of-life
 
