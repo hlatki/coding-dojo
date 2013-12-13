@@ -14,7 +14,7 @@ public:
 
 private:
 
-  static char **_glider_pattern;
+  static const char *_glider_pattern[];
 
 
 private:

@@ -3,7 +3,7 @@
 #include "pattern.baseclass.h"
 
 
-PatternBaseclass::PatternBaseclass(int x_size, int y_size, char **pattern)
+PatternBaseclass::PatternBaseclass(int x_size, int y_size, const char *pattern[])
 {
   _x_size = x_size;
   _y_size = y_size;

@@ -11,12 +11,12 @@ private:
 
   int _x_size;
   int _y_size;
-  char **_pattern;
+  const char **_pattern;
 
 
 protected:
 
-  PatternBaseclass(int x_size, int y_size, char *pattern[]);
+  PatternBaseclass(int x_size, int y_size, const char **pattern);
 
 
 protected:  // IQueryableBoard

@@ -2,7 +2,7 @@
 #include "pattern.glider-gun.h"
 
 
-char **PatternGliderGun::_glider_pattern =
+const char *PatternGliderGun::_glider_pattern[] =
 {
   "..................................................",
   "..................................................",
@@ -39,10 +39,10 @@ char **PatternGliderGun::_glider_pattern =
 
 IQueryableBoard *PatternGliderGun::create(void)
 {
-  return new PatternBaseclass();
+  return new PatternGliderGun();
 }
 
 
 PatternGliderGun::PatternGliderGun(void)
-: PatternBaseclass(50, 30, _glider_pattern)
+: PatternBaseclass(30, 50, _glider_pattern)
 {}
