@@ -3,7 +3,6 @@
 
 #include "igridable.h"
 #include "igamewriter.h"
-#include "pattern.baseclass.h"
 #include "game.grid.h"
 
 

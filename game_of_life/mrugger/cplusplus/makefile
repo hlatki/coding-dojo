@@ -8,7 +8,6 @@ SOURCES=	game-of-life.cpp				\
 					game.board.cpp					\
 					consolewriter.cpp				\
 					queryabletowriter.cpp		\
-					pattern.baseclass.cpp		\
 					pattern.glider-gun.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)

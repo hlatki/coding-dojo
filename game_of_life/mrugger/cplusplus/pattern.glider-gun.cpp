@@ -26,5 +26,5 @@ IGridable *PatternGliderGun::create(void)
 
 
 PatternGliderGun::PatternGliderGun(void)
-: PatternBaseclass(_glider_size, _glider_pattern)
+: GameGrid(_glider_size, _glider_pattern)
 {}

@@ -2,10 +2,11 @@
 #define PATTERN_GLIDER_GUN_H
 
 
-#include "pattern.baseclass.h"
+//#include "pattern.baseclass.h"
+#include "game.grid.h"
 
 
-class PatternGliderGun : public PatternBaseclass
+class PatternGliderGun : public GameGrid
 {
 public:
 
