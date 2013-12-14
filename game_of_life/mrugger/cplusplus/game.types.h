@@ -10,6 +10,14 @@ enum CELL_TYPE
 };
 
 
+enum CHARCELL_MAP
+{
+  CHARCELL_DEAD = ' ',
+  CHARCELL_ALIVE = '*',
+  CHARCELL_ENDOF
+};
+
+
 struct int_pair
 {
   int x, y;

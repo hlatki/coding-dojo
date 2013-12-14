@@ -2,16 +2,17 @@
 #define PATTERN_BASECLASS_H
 
 
-#include "game-types.h"
-#include "iqueryableboard.h"
+#include <memory>
+#include "game.types.h"
+#include "igridable.h"
 
 
-class PatternBaseclass : public IQueryableBoard
+class PatternBaseclass : public IGridable
 {
 private:
 
   int_pair _pattern_size;
-  const char **_pattern;
+  std::auto_ptr<CELL_TYPE> _pattern;
 
 
 protected:
@@ -20,9 +21,10 @@ protected:
   PatternBaseclass(int_pair pattern_size, const char **pattern);
 
   void initialize(int_pair pattern_size, const char **pattern);
+  CELL_TYPE &node(int x, int y);
 
 
-protected:  // IQueryableBoard
+protected:  // IGridable
 
   virtual int get_width(void);
   virtual int get_height(void);

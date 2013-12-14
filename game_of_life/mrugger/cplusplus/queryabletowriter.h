@@ -2,7 +2,7 @@
 #define QUERYABLETOWRITER_H
 
 
-#include "iqueryableboard.h"
+#include "igridable.h"
 #include "igamewriter.h"
 
 
@@ -10,13 +10,13 @@ class QueryableToWriter
 {
 private:
 
-  IQueryableBoard *_pboard;
+  IGridable *_pboard;
   IGameWriter *_pwriter;
 
 
 public:
 
-  QueryableToWriter(IQueryableBoard *pboard, IGameWriter *pwriter);
+  QueryableToWriter(IGridable *pboard, IGameWriter *pwriter);
 
   void draw(void);
 

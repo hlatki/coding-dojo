@@ -9,7 +9,7 @@ class PatternGliderGun : public PatternBaseclass
 {
 public:
 
-  static IQueryableBoard *create(void);
+  static IGridable *create(void);
 
 
 private:

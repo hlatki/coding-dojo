@@ -2,11 +2,11 @@
 #define GAMEPLAYER_H
 
 
-#include "gameboard.h"
-#include "iqueryableboard.h"
+#include "game.board.h"
+#include "igridable.h"
 
 
-class GamePlayer : public IQueryableBoard
+class GamePlayer : public IGridable
 {
 private:
 
@@ -18,12 +18,12 @@ public:
 
   GamePlayer(int_pair board_size,
              int_pair pattern_position,
-             IQueryableBoard *pattern);
+             IGridable *pattern);
 
   void next_generation(void);
 
 
-public:   // IQueryableBoard
+public:   // IGridable
 
   virtual int get_width(void);
   virtual int get_height(void);

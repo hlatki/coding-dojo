@@ -19,7 +19,7 @@ const char *PatternGliderGun::_glider_pattern[] =
 };
 
 
-IQueryableBoard *PatternGliderGun::create(void)
+IGridable *PatternGliderGun::create(void)
 {
   return new PatternGliderGun();
 }

@@ -3,8 +3,8 @@
 #include <unistd.h>
 #include <term.h>
 #include <memory>
-#include "game-types.h"
-#include "game-player.h"
+#include "game.types.h"
+#include "game.player.h"
 #include "consolewriter.h"
 #include "queryabletowriter.h"
 #include "pattern.glider-gun.h"
@@ -14,7 +14,7 @@ int main(void)
 {
   int_pair gameboard_size = { 50, 70 };
   int_pair pattern_position = { 0, 0 };
-  std::auto_ptr<IQueryableBoard> pattern(PatternGliderGun::create());
+  std::auto_ptr<IGridable> pattern(PatternGliderGun::create());
   GamePlayer board(gameboard_size, pattern_position, pattern.get());
 
   std::auto_ptr<IGameWriter> pwriter(ConsoleWriter::create());

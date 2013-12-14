@@ -3,7 +3,7 @@
 #include "queryabletowriter.h"
 
 
-QueryableToWriter::QueryableToWriter(IQueryableBoard *pboard, IGameWriter *pwriter)
+QueryableToWriter::QueryableToWriter(IGridable *pboard, IGameWriter *pwriter)
 {
   if (pboard == NULL)
     throw std::invalid_argument("pboard is null");

@@ -1,11 +1,11 @@
-#ifndef IQUERYABLEBOARD_H
-#define IQUERYABLEBOARD_H
+#ifndef IGRIDABLE_H
+#define IGRIDABLE_H
 
 
-#include "igamewriter.h"
+#include "game.types.h"
 
 
-class IQueryableBoard
+class IGridable
 {
 public:
 
@@ -17,4 +17,4 @@ public:
 };
 
 
-#endif  // IQUERYABLEBOARD_H
+#endif  // IGRIDABLE_H

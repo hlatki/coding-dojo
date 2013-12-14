@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <utility>
-#include "game-player.h"
+#include "game.player.h"
 
 
 GamePlayer::GamePlayer(int_pair board_size,
                        int_pair pattern_position,
-                       IQueryableBoard *pattern)
+                       IGridable *pattern)
 {
   _pboard_current = new GameBoard(board_size, pattern_position, pattern);
   _pboard_next = new GameBoard(_pboard_current);
@@ -19,7 +19,7 @@ void GamePlayer::next_generation(void)
 }
 
 
-// IQueryableBoard
+// IGridable
 
 int GamePlayer::get_width(void)
 {

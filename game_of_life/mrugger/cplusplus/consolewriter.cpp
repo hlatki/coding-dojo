@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "consolewriter.h"
+#include "map.char_cell.h"
 
 
 IGameWriter *ConsoleWriter::create(void)
@@ -31,9 +32,9 @@ void ConsoleWriter::begin_row(void)
 }
 
 
-void ConsoleWriter::write_cell(CELL_TYPE celltype)
+void ConsoleWriter::write_cell(CELL_TYPE cell)
 {
-  printf("%c", celltype ? '*' : ' ');
+  printf("%c", MapCharCell::cell_to_char(cell));
 }
 
 

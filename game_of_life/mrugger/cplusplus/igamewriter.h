@@ -2,7 +2,7 @@
 #define IGAMEWRITER_H
 
 
-#include "game-types.h"
+#include "game.types.h"
 
 
 

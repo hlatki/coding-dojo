@@ -3,8 +3,9 @@ CC=g++
 CFLAGS=-c
 
 SOURCES=	game-of-life.cpp				\
-					game-player.cpp					\
-					gameboard.cpp						\
+					game.grid.cpp						\
+					game.player.cpp					\
+					game.board.cpp					\
 					consolewriter.cpp				\
 					queryabletowriter.cpp		\
 					pattern.baseclass.cpp		\
