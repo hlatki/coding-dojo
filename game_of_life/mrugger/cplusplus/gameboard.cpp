@@ -11,20 +11,20 @@ GameBoard::GameBoard(GameBoard *partner)
 }
 
 
-GameBoard::GameBoard(int x_width, int y_width,
-                     int pattern_x_position, int pattern_y_position,
+GameBoard::GameBoard(int_pair board_size,
+                     int_pair pattern_position,
                      IQueryableBoard *pattern)
 {
-  GRID_SIZE_X = x_width;
-  GRID_SIZE_Y = y_width;
-  _board = new CELL_TYPE[x_width*y_width];
+  GRID_SIZE_X = board_size.x;
+  GRID_SIZE_Y = board_size.y;
+  _board = new CELL_TYPE[GRID_SIZE_X*GRID_SIZE_Y];
 
-  for (int x = 0; x < x_width * y_width; x++)
+  for (int x = 0; x < GRID_SIZE_X * GRID_SIZE_Y; x++)
     _board[x] = CELL_DEAD;
 
   for (int x = 0; x < pattern->get_width(); x++)
     for (int y = 0; y < pattern->get_height(); y++)
-      node(pattern_x_position + x, pattern_y_position + y) = pattern->node_value(x, y);
+      node(pattern_position.x + x, pattern_position.y + y) = pattern->node_value(x, y);
 }
 
 

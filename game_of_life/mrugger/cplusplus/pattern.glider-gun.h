@@ -14,6 +14,7 @@ public:
 
 private:
 
+  static const int_pair _glider_size;
   static const char *_glider_pattern[];
 
 

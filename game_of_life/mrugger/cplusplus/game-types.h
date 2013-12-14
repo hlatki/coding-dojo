@@ -10,7 +10,7 @@ enum CELL_TYPE
 };
 
 
-struct int_point
+struct int_pair
 {
   int x, y;
 };

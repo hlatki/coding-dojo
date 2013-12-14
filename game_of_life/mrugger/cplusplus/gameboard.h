@@ -20,8 +20,8 @@ public:
 
 
   GameBoard(GameBoard *partner);
-  GameBoard(int x_width, int y_width,
-            int pattern_x_position, int pattern_y_position,
+  GameBoard(int_pair board_size,
+            int_pair pattern_position,
             IQueryableBoard *pattern);
 
 

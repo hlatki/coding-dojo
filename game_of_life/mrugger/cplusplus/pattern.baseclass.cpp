@@ -3,10 +3,20 @@
 #include "pattern.baseclass.h"
 
 
-PatternBaseclass::PatternBaseclass(int x_size, int y_size, const char *pattern[])
+PatternBaseclass::PatternBaseclass(void)
 {
-  _x_size = x_size;
-  _y_size = y_size;
+}
+
+
+PatternBaseclass::PatternBaseclass(int_pair pattern_size, const char *pattern[])
+{
+  initialize(pattern_size, pattern);
+}
+
+
+void PatternBaseclass::initialize(int_pair pattern_size, const char **pattern)
+{
+  _pattern_size = pattern_size;
   _pattern = pattern;
 }
 
@@ -15,19 +25,19 @@ PatternBaseclass::PatternBaseclass(int x_size, int y_size, const char *pattern[]
 
 int PatternBaseclass::get_width(void)
 {
-  return _x_size;
+  return _pattern_size.x;
 }
 
 
 int PatternBaseclass::get_height(void)
 {
-  return _y_size;
+  return _pattern_size.y;
 }
 
 
 CELL_TYPE PatternBaseclass::node_value(int x, int y)
 {
-  if (x < 0 || x >= _x_size || y < 0 || y >= _y_size)
+  if (x < 0 || x >= _pattern_size.x || y < 0 || y >= _pattern_size.y)
     throw std::invalid_argument("Index out of range.");
 
   return _pattern[x][y] == '*' ? CELL_ALIVE : CELL_DEAD;

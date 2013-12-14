@@ -2,6 +2,7 @@
 #define PATTERN_BASECLASS_H
 
 
+#include "game-types.h"
 #include "iqueryableboard.h"
 
 
@@ -9,14 +10,16 @@ class PatternBaseclass : public IQueryableBoard
 {
 private:
 
-  int _x_size;
-  int _y_size;
+  int_pair _pattern_size;
   const char **_pattern;
 
 
 protected:
 
-  PatternBaseclass(int x_size, int y_size, const char **pattern);
+  PatternBaseclass(void);
+  PatternBaseclass(int_pair pattern_size, const char **pattern);
+
+  void initialize(int_pair pattern_size, const char **pattern);
 
 
 protected:  // IQueryableBoard

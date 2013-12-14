@@ -16,13 +16,9 @@ private:
 
 public:
 
-  GamePlayer(int_point board_size,
-             int_point pattern_position,
+  GamePlayer(int_pair board_size,
+             int_pair pattern_position,
              IQueryableBoard *pattern);
-
-  GamePlayer(int x_width, int y_width,
-            int pattern_x_position, int pattern_y_position,
-            IQueryableBoard *pattern);
 
   void next_generation(void);
 
