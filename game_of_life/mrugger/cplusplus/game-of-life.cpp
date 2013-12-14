@@ -8,13 +8,14 @@
 #include "writer.console.h"
 #include "mediator.gridable-writer.h"
 #include "pattern.glider-gun.h"
+#include "pattern.switch-engine.h"
 
 
 int main(void)
 {
-  int_pair gameboard_size = { 50, 70 };
-  int_pair pattern_position = { 0, 0 };
-  std::auto_ptr<IGridable> pattern(PatternGliderGun::create());
+  int_pair gameboard_size = { 50, 100 };
+  int_pair pattern_position = { 25, 60 };
+  std::auto_ptr<IGridable> pattern(PatternSwitchEngine::create());
   GamePlayer board(gameboard_size, pattern_position, pattern.get());
 
   std::auto_ptr<IGameWriter> pwriter(WriterConsole::create());

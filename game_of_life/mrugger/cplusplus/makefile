@@ -8,7 +8,8 @@ SOURCES=	game-of-life.cpp								\
 					game.board.cpp									\
 					writer.console.cpp							\
 					mediator.gridable-writer.cpp		\
-					pattern.glider-gun.cpp
+					pattern.glider-gun.cpp					\
+					pattern.switch-engine.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=game-of-life
