@@ -6,7 +6,7 @@ SOURCES=	game-of-life.cpp				\
 					game.grid.cpp						\
 					game.player.cpp					\
 					game.board.cpp					\
-					consolewriter.cpp				\
+					writer.console.cpp			\
 					queryabletowriter.cpp		\
 					pattern.glider-gun.cpp
 

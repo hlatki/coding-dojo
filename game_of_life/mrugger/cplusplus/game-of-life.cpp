@@ -5,7 +5,7 @@
 #include <memory>
 #include "game.types.h"
 #include "game.player.h"
-#include "consolewriter.h"
+#include "writer.console.h"
 #include "queryabletowriter.h"
 #include "pattern.glider-gun.h"
 
@@ -17,7 +17,7 @@ int main(void)
   std::auto_ptr<IGridable> pattern(PatternGliderGun::create());
   GamePlayer board(gameboard_size, pattern_position, pattern.get());
 
-  std::auto_ptr<IGameWriter> pwriter(ConsoleWriter::create());
+  std::auto_ptr<IGameWriter> pwriter(WriterConsole::create());
   QueryableToWriter writer(&board, pwriter.get());
 
   const int SLEEP_TIME = 10000;

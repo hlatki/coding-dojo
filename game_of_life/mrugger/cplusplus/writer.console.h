@@ -1,10 +1,10 @@
-#ifndef CONSOLEWRITER_H
-#define CONSOLEWRITER_H
+#ifndef WRITER_CONSOLE_H
+#define WRITER_CONSOLE_H
 
 #include "igamewriter.h"
 
 
-class ConsoleWriter : public IGameWriter
+class WriterConsole : public IGameWriter
 {
 private:
 
@@ -27,9 +27,9 @@ private: // IGameWriter
 
 private:
 
-  ConsoleWriter(void);
+  WriterConsole(void);
 
 };
 
 
-#endif  // CONSOLEWRITER_H
+#endif  // WRITER_CONSOLE_H
