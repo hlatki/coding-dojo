@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdexcept>
-#include "queryabletowriter.h"
+#include "mediator.gridable-writer.h"
 
 
-QueryableToWriter::QueryableToWriter(IGridable *pboard, IGameWriter *pwriter)
+MediatorGridableToWriter::MediatorGridableToWriter(IGridable *pboard, IGameWriter *pwriter)
 {
   if (pboard == NULL)
     throw std::invalid_argument("pboard is null");
@@ -16,7 +16,7 @@ QueryableToWriter::QueryableToWriter(IGridable *pboard, IGameWriter *pwriter)
 }
 
 
-void QueryableToWriter::draw(void)
+void MediatorGridableToWriter::draw(void)
 {
   _pwriter->begin_board();
   for (int x = 0; x < _pboard->get_width(); x++)

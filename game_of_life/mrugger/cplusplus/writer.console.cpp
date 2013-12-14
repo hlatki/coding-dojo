@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "writer.console.h"
-#include "map.char_cell.h"
+#include "map.char-cell.h"
 
 
 IGameWriter *WriterConsole::create(void)

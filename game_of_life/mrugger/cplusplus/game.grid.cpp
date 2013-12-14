@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdexcept>
 #include "game.grid.h"
-#include "map.char_cell.h"
+#include "map.char-cell.h"
 
 
 GameGrid::GameGrid(void)
