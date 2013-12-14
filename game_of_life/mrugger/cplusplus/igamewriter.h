@@ -2,13 +2,7 @@
 #define IGAMEWRITER_H
 
 
-
-enum CELL_TYPE
-{
-  CELL_DEAD = 0,
-  CELL_ALIVE,
-  CELL_ENDOF
-};
+#include "game-types.h"
 
 
 

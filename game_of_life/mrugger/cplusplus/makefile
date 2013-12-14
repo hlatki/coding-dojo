@@ -3,6 +3,7 @@ CC=g++
 CFLAGS=-c
 
 SOURCES=	game-of-life.cpp				\
+					game-player.cpp					\
 					gameboard.cpp						\
 					consolewriter.cpp				\
 					queryabletowriter.cpp		\

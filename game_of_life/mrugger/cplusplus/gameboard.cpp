@@ -1,21 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "glider-gun.h"
 #include "gameboard.h"
-
-
-#if 0
-GameBoard::GameBoard(int x_width, int y_width, const char *pattern[])
-{
-  GRID_SIZE_X = x_width;
-  GRID_SIZE_Y = y_width;
-  _board = new CELL_TYPE[x_width*y_width];
-
-  for (int x = 0; x < GRID_SIZE_X; x++)
-    for (int y = 0; y < GRID_SIZE_Y; y++)
-      node(x, y) = glider[x][y] == '.' ? CELL_DEAD : CELL_ALIVE;
-}
-#endif
 
 
 GameBoard::GameBoard(GameBoard *partner)

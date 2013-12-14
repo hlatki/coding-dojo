@@ -10,6 +10,7 @@ IGameWriter *ConsoleWriter::create(void)
 
 ConsoleWriter::ConsoleWriter(void)
 {
+  _bnewline = false;
 }
 
 
@@ -22,7 +23,11 @@ void ConsoleWriter::begin_board(void)
 
 void ConsoleWriter::begin_row(void)
 {
-  printf("\n");
+  if (_bnewline)
+  {
+    printf("\n");
+    _bnewline = false;
+  }
 }
 
 
@@ -34,6 +39,7 @@ void ConsoleWriter::write_cell(CELL_TYPE celltype)
 
 void ConsoleWriter::end_row(void)
 {
+  _bnewline = true;
 }
 
 

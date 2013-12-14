@@ -6,6 +6,11 @@
 
 class ConsoleWriter : public IGameWriter
 {
+private:
+
+  bool _bnewline;
+
+  
 public:
 
   static IGameWriter *create(void);
