@@ -20,7 +20,7 @@ public:
   MediatorGridableToWriter(IGridable *pboard, IGameWriter *pwriter);
 
   void draw(void);
-  void draw(int_pair origin, int_pair extent);
+  void draw(int_pair origin);
 
 };
 

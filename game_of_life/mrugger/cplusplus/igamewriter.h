@@ -10,7 +10,7 @@ class IGameWriter
 {
 public:
 
-  virtual void begin_board(void) = 0;
+  virtual int_pair begin_board(void) = 0;
   virtual void begin_row(void) = 0;
   virtual void write_cell(CELL_TYPE celltype) = 0;
   virtual void end_row(void) = 0;

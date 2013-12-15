@@ -19,12 +19,13 @@ private:
   
 public:
 
-  static IGameWriter *create(int_pair extent);
+  static IGameWriter *create(void);
+  static int_pair get_window_size(void);
 
 
 private: // IGameWriter
 
-  virtual void begin_board(void);
+  virtual int_pair begin_board(void);
   virtual void begin_row(void);
   virtual void write_cell(CELL_TYPE celltype);
   virtual void end_row(void);
@@ -33,7 +34,7 @@ private: // IGameWriter
 
 private:
 
-  WriterConsole(int_pair extent);
+  WriterConsole(void);
 
 };
 

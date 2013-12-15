@@ -1,19 +1,31 @@
-#include <stdio.h>
+#include <sys/ioctl.h>
+#include <cstdio>
+#include <unistd.h>
+#include <stdlib.h>
 #include <stdexcept>
 #include "writer.console.h"
 #include "map.char-cell.h"
 
 
-IGameWriter *WriterConsole::create(int_pair extent)
+IGameWriter *WriterConsole::create(void)
 {
-  return new WriterConsole(extent);
+  return new WriterConsole();
 }
 
 
-WriterConsole::WriterConsole(int_pair extent)
+int_pair WriterConsole::get_window_size(void)
 {
-  _extent = extent;
-  _buffer_size = extent.x * (extent.y + 1);
+  struct winsize w;
+  ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+  int_pair rv = { w.ws_row - 1, w.ws_col };
+  return rv;
+}
+
+
+WriterConsole::WriterConsole(void)
+: _extent(get_window_size())
+{
+  _buffer_size = _extent.x * (_extent.y + 1);
   _pbuffer.reset(new char[_buffer_size + 1]);
   _pbuffer.get()[_buffer_size] = '\0';
   _buffer_position = 0;
@@ -21,11 +33,12 @@ WriterConsole::WriterConsole(int_pair extent)
 }
 
 
-void WriterConsole::begin_board(void)
+int_pair WriterConsole::begin_board(void)
 {
   //printf("\033[H\033[J");
   printf("\033[H");
   _buffer_position = 0;
+  return _extent;
 }
 
 
