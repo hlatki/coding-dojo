@@ -11,18 +11,18 @@
 #include "pattern.switch-engine.h"
 
 
-static void gliders(GamePlayer *player)
+static void gliders(GamePlayer *player, int_pair gameboard_size)
 {
   std::auto_ptr<IGridable> pattern(PatternGliderGun::create());
+  const int y_step = 40;
+  int y = 0;
 
-  int_pair pattern1_position = { 0, 0 };
-  player->add_pattern(pattern1_position, pattern.get(), false);
-
-  int_pair pattern2_position = { 0, 40 };
-  player->add_pattern(pattern2_position, pattern.get(), false);
-
-  int_pair pattern3_position = { 0, 80 };
-  player->add_pattern(pattern3_position, pattern.get(), false);
+  while (y < (gameboard_size.y - y_step))
+  {
+    int_pair pattern1_position = { 0, y };
+    player->add_pattern(pattern1_position, pattern.get(), false);
+    y += y_step;
+  }
 }
 
 
@@ -37,13 +37,13 @@ static void switch_engines(GamePlayer *player, int_pair gameboard_size)
 
 int main(void)
 {
-  int_pair gameboard_size(WriterConsole::get_window_size());// = { 150, 360 };
+  int_pair gameboard_size(WriterConsole::get_window_size());
   int_pair window_origin = { 0, 0 };
 
   GamePlayer player(gameboard_size);
 
-  //gliders(&player);
-  switch_engines(&player, gameboard_size);
+  gliders(&player, gameboard_size);
+  //switch_engines(&player, gameboard_size);
 
   std::auto_ptr<IGameWriter> pwriter(WriterConsole::create());
   MediatorGridableToWriter writer(&player, pwriter.get());
