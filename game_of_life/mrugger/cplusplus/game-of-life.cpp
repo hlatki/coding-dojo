@@ -51,7 +51,7 @@ int main(void)
 
   const int SLEEP_TIME = 10000;
 
-  for (int a = 0; a < 1000; a++)
+  for (int a = 0; a < 2000; a++)
   {
     writer.draw(window_origin, window_size);
     player.next_generation();

@@ -12,6 +12,7 @@ private:
 
   int_pair _extent;
   std::auto_ptr<char> _pbuffer;
+  int _buffer_size;
   int _buffer_position;
   bool _bnewline;
 
