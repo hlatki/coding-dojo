@@ -1,6 +1,6 @@
 
 CC=g++
-CFLAGS=-c
+CFLAGS=-c -O3
 
 SOURCES=	game-of-life.cpp								\
 					game.grid.cpp										\

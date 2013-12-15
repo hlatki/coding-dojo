@@ -30,3 +30,20 @@ void MediatorGridableToWriter::draw(void)
   }
   _pwriter->end_board();
 }
+
+
+void MediatorGridableToWriter::draw(int_pair origin, int_pair extent)
+{
+  int_pair size = { origin.x + extent.x, origin.y + extent.y };
+  _pwriter->begin_board();
+  for (int x = origin.x; x < size.x; x++)
+  {
+    _pwriter->begin_row();
+    for (int y = origin.y; y < size.y; y++)
+    {
+      _pwriter->write_cell(_pboard->node_value(x, y));
+    }
+    _pwriter->end_row();
+  }
+  _pwriter->end_board();
+}

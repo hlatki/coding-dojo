@@ -3,14 +3,18 @@
 #include "map.char-cell.h"
 
 
-IGameWriter *WriterConsole::create(void)
+IGameWriter *WriterConsole::create(int_pair extent)
 {
-  return new WriterConsole();
+  return new WriterConsole(extent);
 }
 
 
-WriterConsole::WriterConsole(void)
+WriterConsole::WriterConsole(int_pair extent)
 {
+  _extent = extent;
+  _pbuffer.reset(new char[extent.y + 1]);
+  _pbuffer.get()[extent.y] = '\0';
+  _buffer_position = 0;
   _bnewline = false;
 }
 
@@ -29,17 +33,23 @@ void WriterConsole::begin_row(void)
     printf("\n");
     _bnewline = false;
   }
+
+  _buffer_position = 0;
 }
 
 
 void WriterConsole::write_cell(CELL_TYPE cell)
 {
-  printf("%c", MapCharCell::cell_to_char(cell));
+  if (_buffer_position < _extent.y)
+  {
+    _pbuffer.get()[_buffer_position++] = MapCharCell::cell_to_char(cell);
+  }
 }
 
 
 void WriterConsole::end_row(void)
 {
+  printf("%s", _pbuffer.get());
   _bnewline = true;
 }
 

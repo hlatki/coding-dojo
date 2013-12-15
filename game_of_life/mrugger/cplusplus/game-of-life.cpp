@@ -30,27 +30,30 @@ static void switch_engines(GamePlayer *player)
 {
   std::auto_ptr<IGridable> pattern(PatternSwitchEngine::create());
 
-  int_pair pattern1_position = { 25, 60 };
+  int_pair pattern1_position = { 75, 180 };
   player->add_pattern(pattern1_position, pattern.get(), false);
 }
 
 
 int main(void)
 {
-  int_pair gameboard_size = { 50, 120 };
+  int_pair gameboard_size = { 150, 360 };
+  int_pair window_origin = { 50, 120 };
+  int_pair window_size = { 50, 120 };
+
   GamePlayer player(gameboard_size);
 
   //gliders(&player);
   switch_engines(&player);
 
-  std::auto_ptr<IGameWriter> pwriter(WriterConsole::create());
+  std::auto_ptr<IGameWriter> pwriter(WriterConsole::create(window_size));
   MediatorGridableToWriter writer(&player, pwriter.get());
 
   const int SLEEP_TIME = 10000;
 
   for (int a = 0; a < 1000; a++)
   {
-    writer.draw();
+    writer.draw(window_origin, window_size);
     player.next_generation();
     //usleep(SLEEP_TIME);
   }

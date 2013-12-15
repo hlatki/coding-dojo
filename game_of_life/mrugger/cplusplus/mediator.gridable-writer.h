@@ -2,6 +2,7 @@
 #define MEDIATOR_GRIDABLE_WRITER_H
 
 
+#include "game.types.h"
 #include "igridable.h"
 #include "igamewriter.h"
 
@@ -19,6 +20,7 @@ public:
   MediatorGridableToWriter(IGridable *pboard, IGameWriter *pwriter);
 
   void draw(void);
+  void draw(int_pair origin, int_pair extent);
 
 };
 

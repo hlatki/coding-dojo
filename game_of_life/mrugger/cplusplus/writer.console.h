@@ -1,6 +1,8 @@
 #ifndef WRITER_CONSOLE_H
 #define WRITER_CONSOLE_H
 
+
+#include <memory>
 #include "igamewriter.h"
 
 
@@ -8,12 +10,15 @@ class WriterConsole : public IGameWriter
 {
 private:
 
+  int_pair _extent;
+  std::auto_ptr<char> _pbuffer;
+  int _buffer_position;
   bool _bnewline;
 
   
 public:
 
-  static IGameWriter *create(void);
+  static IGameWriter *create(int_pair extent);
 
 
 private: // IGameWriter
@@ -27,7 +32,7 @@ private: // IGameWriter
 
 private:
 
-  WriterConsole(void);
+  WriterConsole(int_pair extent);
 
 };
 
