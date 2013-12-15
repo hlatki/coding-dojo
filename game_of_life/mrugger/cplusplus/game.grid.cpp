@@ -67,6 +67,12 @@ CELL_TYPE &GameGrid::node(int x, int y)
 }
 
 
+bool GameGrid::is_valid_position(int x, int y)
+{
+  return x >= 0 && x < _grid_size.x && y >= 0 && y < _grid_size.y;
+}
+
+
 // IGridable
 
 int GameGrid::get_width(void)

@@ -26,6 +26,8 @@ protected:
   void initialize(int_pair grid_size, const char **pattern);
   CELL_TYPE &node(int x, int y);
 
+  bool is_valid_position(int x, int y);
+
 
 public:  // IGridable
 

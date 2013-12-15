@@ -16,10 +16,12 @@ private:
 
 public:
 
+  GamePlayer(int_pair board_size);
   GamePlayer(int_pair board_size,
              int_pair pattern_position,
              IGridable *pattern);
 
+  void add_pattern(int_pair position, IGridable *pattern, bool btransparent);
   void next_generation(void);
 
 

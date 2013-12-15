@@ -4,6 +4,11 @@
 #include "game.board.h"
 
 
+GameBoard::GameBoard(int_pair board_size)
+: GameGrid(board_size)
+{}
+
+
 GameBoard::GameBoard(IGridable *original)
 : GameGrid(original)
 {
@@ -18,6 +23,21 @@ GameBoard::GameBoard(int_pair board_size,
   for (int x = 0; x < pattern->get_width(); x++)
     for (int y = 0; y < pattern->get_height(); y++)
       node(pattern_position.x + x, pattern_position.y + y) = pattern->node_value(x, y);
+}
+
+
+void GameBoard::add_pattern(int_pair position, IGridable *pattern, bool btransparent)
+{
+  for (int x = 0; x < pattern->get_width(); x++)
+  {
+    for (int y = 0; y < pattern->get_height(); y++)
+    {
+      int grid_position_x = position.x + x;
+      int grid_position_y = position.y + y;
+      if (is_valid_position(grid_position_x, grid_position_y))
+        node(grid_position_x, grid_position_y) = pattern->node_value(x, y);
+    }
+  }
 }
 
 

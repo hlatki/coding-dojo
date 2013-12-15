@@ -13,10 +13,18 @@
 
 int main(void)
 {
-  int_pair gameboard_size = { 50, 100 };
-  int_pair pattern_position = { 25, 60 };
-  std::auto_ptr<IGridable> pattern(PatternSwitchEngine::create());
-  GamePlayer board(gameboard_size, pattern_position, pattern.get());
+  int_pair gameboard_size = { 50, 120 };
+  std::auto_ptr<IGridable> pattern(PatternGliderGun::create());
+  GamePlayer board(gameboard_size);
+
+  int_pair pattern1_position = { 0, 0 };
+  board.add_pattern(pattern1_position, pattern.get(), false);
+
+  int_pair pattern2_position = { 0, 40 };
+  board.add_pattern(pattern2_position, pattern.get(), false);
+
+  int_pair pattern3_position = { 0, 80 };
+  board.add_pattern(pattern3_position, pattern.get(), false);
 
   std::auto_ptr<IGameWriter> pwriter(WriterConsole::create());
   MediatorGridableToWriter writer(&board, pwriter.get());
