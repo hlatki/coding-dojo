@@ -11,31 +11,48 @@
 #include "pattern.switch-engine.h"
 
 
+static void gliders(GamePlayer *player)
+{
+  std::auto_ptr<IGridable> pattern(PatternGliderGun::create());
+
+  int_pair pattern1_position = { 0, 0 };
+  player->add_pattern(pattern1_position, pattern.get(), false);
+
+  int_pair pattern2_position = { 0, 40 };
+  player->add_pattern(pattern2_position, pattern.get(), false);
+
+  int_pair pattern3_position = { 0, 80 };
+  player->add_pattern(pattern3_position, pattern.get(), false);
+}
+
+
+static void switch_engines(GamePlayer *player)
+{
+  std::auto_ptr<IGridable> pattern(PatternSwitchEngine::create());
+
+  int_pair pattern1_position = { 25, 60 };
+  player->add_pattern(pattern1_position, pattern.get(), false);
+}
+
+
 int main(void)
 {
   int_pair gameboard_size = { 50, 120 };
-  std::auto_ptr<IGridable> pattern(PatternGliderGun::create());
-  GamePlayer board(gameboard_size);
+  GamePlayer player(gameboard_size);
 
-  int_pair pattern1_position = { 0, 0 };
-  board.add_pattern(pattern1_position, pattern.get(), false);
-
-  int_pair pattern2_position = { 0, 40 };
-  board.add_pattern(pattern2_position, pattern.get(), false);
-
-  int_pair pattern3_position = { 0, 80 };
-  board.add_pattern(pattern3_position, pattern.get(), false);
+  //gliders(&player);
+  switch_engines(&player);
 
   std::auto_ptr<IGameWriter> pwriter(WriterConsole::create());
-  MediatorGridableToWriter writer(&board, pwriter.get());
+  MediatorGridableToWriter writer(&player, pwriter.get());
 
   const int SLEEP_TIME = 10000;
 
   for (int a = 0; a < 1000; a++)
   {
     writer.draw();
-    board.next_generation();
-    usleep(SLEEP_TIME);
+    player.next_generation();
+    //usleep(SLEEP_TIME);
   }
 
   return 0;
