@@ -19,11 +19,11 @@ class MediatorGridWriter
 
   # Writer interface
 
-  def draw
+  def draw(start_x, start_y)
     output_size = @writer.begin_board
-    for x in 0..output_size.x-1
+    for x in start_x..(start_x + output_size.x - 1)
       @writer.begin_row
-      for y in 0..output_size.y-1
+      for y in start_y..(start_y + output_size.y - 1)
         @writer.write_cell(@grid.node_value(x, y))
       end
       @writer.end_row
