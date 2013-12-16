@@ -23,6 +23,6 @@ mediator = MediatorGridWriter.new(gameplayer, writer)
 
 for a in 1..50
   gameplayer.next_generation
+  mediator.draw(0, 0)
 end
 
-mediator.draw(0, 0)

@@ -18,6 +18,7 @@ class WriterConsole
   # Game writer interface
 
   def begin_board
+    puts "\033[H"
     @output_size
   end
 
