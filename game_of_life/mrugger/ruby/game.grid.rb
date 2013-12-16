@@ -26,22 +26,31 @@ class GameGrid
   end
 
   def node_value(x, y)
-    raise RangeError, "x (#{x}) parameter out of range" if x < 0 || x >= get_height
-    raise RangeError, "y (#{y}) parameter out of range" if y < 0 || y >= get_width
+    raise RangeError, "x or y (#{x}, #{y}) are out of range" if out_of_range?(x, y)
     @grid[x][y]
   end
 
   def in_range?(x, y)
-    return false if x < 0 || x >= get_height || y < 0 || y >= get_width
-    return true
+    x >= 0 && x < get_height && y >= 0 && y < get_width
+  end
+
+  def out_of_range?(x, y)
+    x < 0 || x >= get_height || y < 0 || y >= get_width
+  end
+
+  def for_each_cell
+    for x in 0..get_height-1
+      for y in 0..get_width-1
+        yield x, y
+      end
+    end
   end
 
 
   protected
 
   def set_node_value(x, y, value)
-    raise RangeError, "x (#{x}) parameter out of range" if x < 0 || x >= get_height
-    raise RangeError, "y (#{y}) parameter out of range" if y < 0 || y >= get_width
+    raise RangeError, "x or y (#{x}, #{y}) are out of range" if out_of_range?(x, y)
     @grid[x][y] = value
   end
 

@@ -10,12 +10,16 @@ class GameBoard < GameGrid
   end
 
   def next_generation(parent_grid)
-    for x in 0..get_height-1
-      for y in 0..get_width-1
-        new_cell_value = calculate_cell(parent_grid, x, y)
-        set_node_value(x, y, new_cell_value)
-      end
+    for_each_cell do |x, y|
+      new_cell_value = calculate_cell(parent_grid, x, y)
+      set_node_value(x, y, new_cell_value)
     end
+#    for x in 0..get_height-1
+#      for y in 0..get_width-1
+#        new_cell_value = calculate_cell(parent_grid, x, y)
+#        set_node_value(x, y, new_cell_value)
+#      end
+#    end
   end
 
 
