@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <term.h>
 #include <memory>
+#include <curses.h>
 #include "game.types.h"
 #include "game.player.h"
 #include "writer.console.h"
@@ -37,25 +38,63 @@ static void switch_engines(GamePlayer *player, int_pair gameboard_size)
 
 int main(void)
 {
-  int_pair gameboard_size(WriterConsole::get_window_size());
-  int_pair window_origin = { 0, 0 };
+  initscr();
+  cbreak();
+  noecho();
+  nodelay(stdscr, TRUE);
+  keypad(stdscr, TRUE);
+
+  int_pair gameboard_size = { 150, 360 };\
+  int_pair window_origin = { 50, 60 };
+  int_pair window_size(WriterConsole::get_window_size());
 
   GamePlayer player(gameboard_size);
 
-  gliders(&player, gameboard_size);
-  //switch_engines(&player, gameboard_size);
+  //gliders(&player, gameboard_size);
+  switch_engines(&player, gameboard_size);
 
   std::auto_ptr<IGameWriter> pwriter(WriterConsole::create());
   MediatorGridableToWriter writer(&player, pwriter.get());
 
   const int SLEEP_TIME = 10000;
 
-  for (int a = 0; a < 2000; a++)
+  bool bdone = false;
+  while (!bdone)
   {
     writer.draw(window_origin);
     player.next_generation();
     //usleep(SLEEP_TIME);
+
+    int key = getch();
+    switch (key)
+    {
+      case KEY_LEFT:
+        if (window_origin.y > 0)
+          window_origin.y--;
+      break;
+
+      case KEY_RIGHT:
+        if (window_origin.y < gameboard_size.y - window_size.y)
+          window_origin.y++;
+      break;
+
+      case KEY_UP:
+        if (window_origin.x > 0)
+          window_origin.x--;
+      break;
+
+      case KEY_DOWN:
+        if (window_origin.x < gameboard_size.x - window_size.x)
+          window_origin.x++;
+      break;
+
+      case KEY_BACKSPACE:
+        bdone = true;
+      break;
+    }
   }
+
+  endwin();
 
   return 0;
 }

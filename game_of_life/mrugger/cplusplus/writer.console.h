@@ -10,11 +10,9 @@ class WriterConsole : public IGameWriter
 {
 private:
 
-  int_pair _extent;
-  std::auto_ptr<char> _pbuffer;
-  int _buffer_size;
-  int _buffer_position;
+  int row;
   bool _bnewline;
+  int_pair _extent;
 
   
 public:

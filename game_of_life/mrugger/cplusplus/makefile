@@ -1,6 +1,7 @@
 
 CC=g++
 CFLAGS=-c -O3
+LDFLAGS=-lncurses
 
 SOURCES=	game-of-life.cpp								\
 					game.grid.cpp										\
@@ -24,7 +25,7 @@ clean:
 
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
 
 
 .cpp.o:
