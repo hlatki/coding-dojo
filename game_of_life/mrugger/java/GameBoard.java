@@ -7,6 +7,17 @@ class GameBoard extends GameGrid
     super(gridsize);
   }
 
+  public void add_pattern(Pair position, IGridable pattern)
+  {
+    for (int x = 0; x < pattern.get_height(); x++)
+    {
+      for (int y = 0; y < pattern.get_width(); y++)
+      {
+        set_node_value(position.x + x, position.y + y, pattern.node_value(x, y));
+      }
+    }
+  }
+
   public void next_generation(GameBoard parent)
   {
     for (int x = 0; x < get_height(); x++)
