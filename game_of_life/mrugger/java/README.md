@@ -6,4 +6,4 @@ To compile:
 
 To run:
 
-`java GameOfLife`
+`$ java GameOfLife`
