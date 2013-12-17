@@ -24,7 +24,7 @@ class WriterConsole implements IWriteable
 
   public void write_cell(CellType cellvalue)
   {
-    System.out.print(cellvalue == CellType.CELL_ALIVE ? '*' : ' ');
+    System.out.print(cellvalue.to_char());//(cellvalue == CellType.CELL_ALIVE ? '*' : ' ');
   }
 
   public void end_row()

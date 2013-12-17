@@ -16,4 +16,9 @@ class Pair
     x = other.x;
     y = other.y;
   }
+
+  public String to_string()
+  {
+    return Integer.toString(x) + " " + Integer.toString(y);
+  }
 }

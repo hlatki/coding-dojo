@@ -23,6 +23,10 @@ class GameOfLife
       mediator.draw(window_position);
     }
 
+    WriterStream outstream = new WriterStream(boardsize, "glider.txt");
+    MediatorGridWriter med = new MediatorGridWriter(player, outstream);
+    med.draw(window_position);
+
     System.out.format("size_x = %d, size_y = %d\n", player.get_height(), player.get_width());
   }
 }
