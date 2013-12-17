@@ -7,10 +7,8 @@ class GameBoard < GameGrid
   # GameBoard interface
 
   def add_pattern(position, pattern_grid, btransparent)
-    for x in 0..pattern_grid.get_height-1
-      for y in 0..pattern_grid.get_width-1
-        set_node_value(position.x + x, position.y + y, pattern_grid.node_value(x, y))
-      end
+    pattern_grid.for_each_cell do |x, y|
+      set_node_value(position.x + x, position.y + y, pattern_grid.node_value(x, y))
     end
   end
 

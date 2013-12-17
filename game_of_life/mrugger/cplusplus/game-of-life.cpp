@@ -44,14 +44,14 @@ int main(void)
   nodelay(stdscr, TRUE);
   keypad(stdscr, TRUE);
 
-  int_pair gameboard_size = { 150, 360 };\
-  int_pair window_origin = { 50, 60 };
+  int_pair gameboard_size(WriterConsole::get_window_size());
+  int_pair window_origin = { 0, 0 };
   int_pair window_size(WriterConsole::get_window_size());
 
   GamePlayer player(gameboard_size);
 
-  //gliders(&player, gameboard_size);
-  switch_engines(&player, gameboard_size);
+  gliders(&player, gameboard_size);
+  //switch_engines(&player, gameboard_size);
 
   std::auto_ptr<IGameWriter> pwriter(WriterConsole::create());
   MediatorGridableToWriter writer(&player, pwriter.get());
