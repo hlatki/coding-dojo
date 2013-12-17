@@ -40,7 +40,7 @@ class PatternGliderGun implements IGridable
     if (in_range(x, y))
     {
       String row = _pattern[x];
-      return row.charAt(y) == '*' ? CellType.CELL_ALIVE : CellType.CELL_DEAD;
+      return CellType.from_char(row.charAt(y));
     }
     else
       throw new RuntimeException("x or y out of range");

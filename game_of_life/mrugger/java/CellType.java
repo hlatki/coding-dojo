@@ -13,6 +13,11 @@ enum CellType
     _value = value;
   }
 
+  static CellType from_char(char chr)
+  {
+    return chr == '*' ? CELL_ALIVE : CELL_DEAD;
+  }
+
   public char to_char()
   {
     return _value == 1 ? '*' : ' ';
