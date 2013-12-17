@@ -12,6 +12,18 @@ class MediatorGridWriter
   }
 
 
+  public void set_grid(IGridable grid)
+  {
+    _grid = grid;
+  }
+
+
+  public void set_writer(IWriteable writer)
+  {
+    _writer = writer;
+  }
+
+
   public void draw(Pair position)
   {
     Pair window_size = _writer.begin_board();
