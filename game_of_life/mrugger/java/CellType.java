@@ -22,4 +22,9 @@ enum CellType
   {
     return _value == 1 ? '*' : ' ';
   }
+
+  public char to_file()
+  {
+    return _value == 1 ? '*' : '.';
+  }
 }

@@ -6,28 +6,15 @@ import java.io.IOException;
 class WriterStream implements IWriteable
 {
   private Pair _window_size;
-  OutputStream _outstream;
-
-
-  public WriterStream(Pair window_size, OutputStream outstream)
-  {
-    _window_size = window_size;
-    _outstream = outstream;
-  }
+  private OutputStream _outstream;
+  private String _filename;
 
 
   public WriterStream(Pair window_size, String filename)
   {
     _window_size = window_size;
-    try
-    {
-      _outstream = new FileOutputStream(filename);
-    }
-
-    catch (IOException e)
-    {
-      e.printStackTrace();
-    }
+    _outstream = null;
+    _filename = filename;
   }
 
 
@@ -37,6 +24,7 @@ class WriterStream implements IWriteable
   {
     try
     {
+      _outstream = new FileOutputStream(filename);
       _outstream.write(_window_size.to_string().getBytes());
       _outstream.write('\n');
     }
@@ -49,14 +37,16 @@ class WriterStream implements IWriteable
     return _window_size;
   }
 
+
   public void begin_row()
   {}
+
 
   public void write_cell(CellType cellvalue)
   {
     try
     {
-      _outstream.write(cellvalue.to_char());
+      _outstream.write(cellvalue.to_file());
     }
 
     catch (IOException e)
@@ -64,6 +54,7 @@ class WriterStream implements IWriteable
       e.printStackTrace();
     }
   }
+
 
   public void end_row()
   {
@@ -78,6 +69,20 @@ class WriterStream implements IWriteable
     }
   }
 
+
   public void end_board()
-  {}
+  {
+    try
+    {
+      if (_outstream != null)
+      {
+        _outstream.close();
+      }
+    }
+
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
+  }
 }
