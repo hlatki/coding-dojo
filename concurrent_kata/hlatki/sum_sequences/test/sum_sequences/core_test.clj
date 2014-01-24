@@ -8,3 +8,9 @@
 (deftest simple-sum-seq
   (testing "Can it find some sum seqs"
     (is (= (recur-naive-get-all-sum-seqs sum-seq-in) sum-seq-result))))
+
+
+(def test-seq (generate-seq 1000000))
+(time (naive-get-all-sums-seqs test-seq))
+(time (pmap-get-all-sums-seqs test-seq))
+
