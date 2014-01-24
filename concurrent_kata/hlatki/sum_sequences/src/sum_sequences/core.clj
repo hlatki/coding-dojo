@@ -43,12 +43,20 @@
   [v]
   (apply concat (map pretty-get-seqs-from-first (partition-all 10 1 v))))
 
+(defn pmap-get-all-sums-seqs
+  "Like recur-naive-get-all-sum seqs, but maybe more idiomatic. seq is divided
+  into overlapping partitons of length 10 (max size of a sum seq) and then each 
+  partition is run through get-seqs-from-first"
+  [v]
+  (apply concat (pmap pretty-get-seqs-from-first (partition-all 10 1 v))))
+
 
 ;; sanity check tests
 (def t [1 1 2 3 7])
 (def u [1 1 2 3 1 7 8])
 
 (apply concat (map pretty-get-seqs-from-first (partition-all 10 1 t)))
-(= (naive-get-all-sum-seqs t) (recur-naive-get-all-sum-seqs t))
-(= (naive-get-all-sum-seqs u) (recur-naive-get-all-sum-seqs u))
+(= (naive-get-all-sums-seqs t) (recur-naive-get-all-sum-seqs t))
+(= (naive-get-all-sums-seqs u) (recur-naive-get-all-sum-seqs u))
+
 
